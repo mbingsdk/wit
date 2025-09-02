@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Social Links – Luxury Overlay</title>
+<style>
+  :root {
+    --gold:#d4af37;
+    --gold-light:#f7e7a8;
+    --bg-dark:rgba(10,10,10,0.6);
+    --text:#f5f5f5;
+    --discord:#5865F2;
+  }
+  html,body{
+    margin:0; padding:0;
+    background:transparent;
+    font-family:"Playfair Display",serif;
+    color:var(--text);
+  }
+
+  .widget{
+    position:relative;
+    padding:20px 24px;
+    border:2px solid var(--gold);
+    border-radius:14px;
+    background:var(--bg-dark);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    max-width:520px;
+    box-shadow:0 0 20px rgba(212,175,55,0.35);
+  }
+
+  .title{
+    font-size:20px;
+    font-weight:700;
+    margin:0 0 14px;
+    background: linear-gradient(90deg, var(--gold-light), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform:uppercase;
+    letter-spacing:2px;
+    text-align:center;
+  }
+
+  .links{
+    list-style:none;
+    margin:0; padding:0;
+    display:grid; gap:10px;
+  }
+  .links li{ display:flex; align-items:center; gap:10px; }
+
+  .links a{
+    color:var(--text);
+    text-decoration:none;
+    font-weight:600;
+    letter-spacing:1px;
+    transition: color .25s ease, text-shadow .25s ease;
+  }
+  .links a:hover{
+    color:var(--gold-light);
+    text-shadow:0 0 6px var(--gold);
+  }
+
+  /* Discord spesial */
+  .discord-row a{
+    color:var(--gold);
+    text-shadow:0 0 6px rgba(212,175,55,0.6);
+  }
+
+  /* Divider dekoratif */
+  .divider{
+    height:1px;
+    margin:14px 0;
+    background:linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  /* Ikon tipis (emas) */
+  .icon{
+    width:18px; height:18px; flex:0 0 18px;
+    fill:var(--gold);
+    opacity:.85;
+  }
+
+  /* Ornamen sudut */
+  .corner{
+    position:absolute;
+    width:16px; height:16px;
+    border:2px solid var(--gold);
+  }
+  .corner.tl{ top:-2px; left:-2px; border-right:none; border-bottom:none; border-radius:6px 0 0 0; }
+  .corner.tr{ top:-2px; right:-2px; border-left:none; border-bottom:none; border-radius:0 6px 0 0; }
+  .corner.bl{ bottom:-2px; left:-2px; border-right:none; border-top:none; border-radius:0 0 0 6px; }
+  .corner.br{ bottom:-2px; right:-2px; border-left:none; border-top:none; border-radius:0 0 6px 0; }
+</style>
+</head>
+<body>
+  <div class="widget">
+    <!-- sudut emas -->
+    <span class="corner tl"></span>
+    <span class="corner tr"></span>
+    <span class="corner bl"></span>
+    <span class="corner br"></span>
+
+    <h3 class="title">Connect With Me</h3>
+
+    <ul class="links">
+      <!-- Discord -->
+      <li class="discord-row">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M20.317 4.369A18.03 18.03 0 0 0 16.556 3c-.19.335-.41.79-.562 1.143a16.204 16.204 0 0 0-4.0 0A8.72 8.72 0 0 0 11.431 3c-1.357.25-2.65.66-3.76 1.244C4.95 7.295 4.222 11.216 4.5 15.07c1.577 1.177 3.107 1.897 4.656 2.375.376-.517.712-1.065.998-1.64-.552-.21-1.084-.47-1.592-.772c.132-.099.261-.203.385-.31 1.92.894 3.999.894 5.918 0 .124.107.253.21.385.31-.508.303-1.04.563-1.592.772.286.575.622 1.123.998 1.64 1.549-.478 3.079-1.198 4.656-2.375.324-4.39-.724-8.27-3.995-10.701zM9.7 13.6c-.627 0-1.138-.57-1.138-1.271 0-.702.511-1.272 1.138-1.272.629 0 1.139.57 1.139 1.272 0 .701-.51 1.27-1.139 1.27zm4.6 0c-.628 0-1.139-.57-1.139-1.271 0-.702.511-1.272 1.139-1.272.628 0 1.139.57 1.139 1.272 0 .701-.511 1.27-1.139 1.27z"/></svg>
+        <a href="https://discord.gg/yourinvite" target="_blank" rel="noopener">Discord: Unavailable</a>
+      </li>
+
+      <div class="divider"></div>
+
+      <!-- TikTok -->
+      <li>
+        <svg class="icon" viewBox="0 0 24 24"><path d="M16 3c.38 1.6 1.46 2.92 3 3.62v3.02c-1.3-.04-2.54-.45-3.6-1.18v6.98a6.44 6.44 0 1 1-5.6-6.39v3.19a3.27 3.27 0 1 0 2.6 3.2V3h3.6z"/></svg>
+        <a href="https://tiktok.com/@tantrumcircle" target="_blank" rel="noopener">@tantrumcircle</a>
+      </li>
+
+      <!-- Instagram -->
+      <li>
+        <svg class="icon" viewBox="0 0 24 24"><path d="M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4zm5 4.5A4.5 4.5 0 1 0 16.5 12 4.5 4.5 0 0 0 12 7.5zm6-.75a1 1 0 1 0 1 1 1 1 0 0 0-1-1zM12 9a3 3 0 1 1-3 3 3 3 0 0 1 3-3z"/></svg>
+        <a href="https://instagram.com/tantrum.circle" target="_blank" rel="noopener">@tantrum.circle</a>
+      </li>
+
+      <!-- YouTube>
+      <li>
+        <svg class="icon" viewBox="0 0 24 24"><path d="M22 12c0-2.2-.2-3.7-.6-4.6-.3-.7-.8-1.2-1.5-1.5C18.9 5.4 12 5.4 12 5.4s-6.9 0-7.9.5c-.7.3-1.2.8-1.5 1.5C2.2 8.3 2 9.8 2 12s.2 3.7.6 4.6c.3.7.8 1.2 1.5 1.5 1 .5 7.9.5 7.9.5s6.9 0 7.9-.5c.7-.3 1.2-.8 1.5-1.5.4-.9.6-2.4.6-4.6zM10 9.75l5 2.25-5 2.25v-4.5z"/></svg>
+        <a href="https://youtube.com/@username" target="_blank" rel="noopener">@username di YouTube</a>
+      </li -->
+    </ul>
+  </div>
+</body>
+</html>
