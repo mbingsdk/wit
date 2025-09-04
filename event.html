@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Live Event Text Overlay</title>
+<title>Live Event Overlay</title>
 <style>
   html,body{
     margin:0; padding:0;
@@ -12,44 +12,56 @@
   }
 
   .overlay{
-    text-align:center;
+    display:inline-block;
+    padding:16px 24px;
+    background:rgba(15,15,30,0.7);        /* semi transparan */
+    border:2px solid rgba(0,255,200,0.7); /* garis neon */
+    border-radius:14px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow:0 0 20px rgba(0,255,200,0.4),0 0 40px rgba(255,0,200,0.25);
     color:#fff;
+    text-align:center;
+    min-width:320px;
   }
 
   .event-title{
-    font-size:32px;
+    font-size:26px;
     font-weight:800;
+    margin:0;
     text-transform:uppercase;
-    letter-spacing:3px;
+    letter-spacing:2px;
     background:linear-gradient(90deg,#00fff2,#ff00d4,#00fff2);
     background-size:200% auto;
     -webkit-background-clip:text;
     -webkit-text-fill-color:transparent;
     animation: shine 6s linear infinite;
     text-shadow:0 0 15px rgba(0,255,200,0.8),0 0 25px rgba(255,0,200,0.7);
-    margin:0;
   }
 
   .event-sub{
     margin-top:6px;
-    font-size:18px;
-    color:#ffffff;
-    font-weight:600;
-    text-shadow:0 0 10px rgba(0,255,200,0.8);
-    animation: fadeIn 2s ease forwards;
+    font-size:16px;
+    color:#e0e0ff;
+    font-weight:500;
+    text-shadow:0 0 8px rgba(0,255,200,0.8);
+    animation: fadeIn 1.5s ease forwards;
   }
 
   .marquee{
     margin-top:10px;
     white-space:nowrap;
     overflow:hidden;
+    border-top:1px solid rgba(0,255,200,0.25);
+    border-bottom:1px solid rgba(255,0,200,0.25);
+    padding:6px 0;
   }
   .marquee span{
     display:inline-block;
     padding-left:100%;
-    font-size:16px;
+    font-size:14px;
     color:#fff;
-    text-shadow:0 0 12px rgba(255,0,200,0.8);
+    text-shadow:0 0 10px rgba(255,0,200,0.8);
     animation: marquee 12s linear infinite;
   }
 
