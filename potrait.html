@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TikTok Overlay - Portrait</title>
+  <title>Overlay Portrait</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     body {
@@ -20,27 +20,43 @@
       width: 360px;
       height: 640px;
       position: relative;
-      border-radius: 20px;
-      overflow: hidden;
     }
     .game-frame {
-      width: 100%;
-      height: 100%;
-      border: 5px solid #fff;
+      width: 90%;
+      height: 50%;
+      position: absolute;
+      top: 15%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 4px solid #fff;
       border-radius: 15px;
-      animation: glowBorder 3s ease-in-out infinite alternate;
       background: rgba(255,255,255,0.05);
+      animation: glowBorder 3s ease-in-out infinite alternate;
     }
     .camera-frame {
       position: absolute;
-      bottom: 20px;
+      bottom: 70px;
       right: 20px;
-      width: 90px;
-      height: 120px;
+      width: 80px;
+      height: 100px;
       border: 3px solid #fff;
-      border-radius: 12px;
+      border-radius: 10px;
       background: rgba(255,255,255,0.1);
       animation: glowBorder 3s ease-in-out infinite alternate;
+    }
+    .alert-box {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 6px 12px;
+      border: 2px solid #fff;
+      border-radius: 10px;
+      background: rgba(0,0,0,0.3);
+      color: #fff;
+      font-size: 14px;
+      font-weight: bold;
+      animation: glowText 2s ease-in-out infinite alternate;
     }
     .social-bar {
       position: absolute;
@@ -56,26 +72,12 @@
       border: 2px solid #fff;
       border-radius: 10px;
       padding: 4px 8px;
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255,255,255,0.05);
       color: #73cfff;
       font-size: 12px;
       animation: glowText 2s ease-in-out infinite alternate;
     }
     .social-item i { margin-right: 4px; }
-    .alert-box {
-      position: absolute;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 6px 12px;
-      border: 2px solid #fff;
-      border-radius: 10px;
-      background: rgba(0,0,0,0.3);
-      color: #fff;
-      font-size: 14px;
-      font-weight: bold;
-      animation: glowText 2s ease-in-out infinite alternate;
-    }
     @keyframes glowBorder {
       from { box-shadow: 0 0 10px #a3dfff, 0 0 20px #e0f7ff; }
       to { box-shadow: 0 0 20px #73cfff, 0 0 40px #b3ecff; }
@@ -102,13 +104,12 @@
   <div class="container" id="portrait-container">
     <div class="game-frame"></div>
     <div class="camera-frame"></div>
+    <div class="alert-box">🎉 New Follower!</div>
     <div class="social-bar">
       <div class="social-item"><i class="fab fa-tiktok"></i>@tiktok</div>
       <div class="social-item"><i class="fab fa-youtube"></i>@youtube</div>
     </div>
-    <div class="alert-box">🎉 New Follower!</div>
   </div>
-
   <script>
     const portraitContainer = document.getElementById('portrait-container');
     function createSnowflakesPortrait() {
