@@ -25,7 +25,7 @@
     }
     .game-frame {
       width: 100%;
-      height: 60%;
+      height: 100%;
       border: 5px solid #fff;
       border-radius: 15px;
       animation: glowBorder 3s ease-in-out infinite alternate;
@@ -33,69 +33,56 @@
     }
     .camera-frame {
       position: absolute;
-      bottom: 120px;
+      bottom: 20px;
       right: 20px;
-      width: 100px;
-      height: 140px;
-      border: 4px solid #fff;
-      border-radius: 15px;
-      animation: glowBorder 3s ease-in-out infinite alternate;
+      width: 90px;
+      height: 120px;
+      border: 3px solid #fff;
+      border-radius: 12px;
       background: rgba(255,255,255,0.1);
+      animation: glowBorder 3s ease-in-out infinite alternate;
     }
     .social-bar {
       position: absolute;
-      bottom: 20px;
+      bottom: 10px;
       left: 50%;
       transform: translateX(-50%);
       display: flex;
-      gap: 15px;
+      gap: 10px;
     }
     .social-item {
       display: flex;
       align-items: center;
       border: 2px solid #fff;
-      border-radius: 12px;
-      padding: 6px 12px;
+      border-radius: 10px;
+      padding: 4px 8px;
       background: rgba(255, 255, 255, 0.05);
       color: #73cfff;
+      font-size: 12px;
       animation: glowText 2s ease-in-out infinite alternate;
     }
-    .social-item i { margin-right: 6px; font-size: 16px; }
+    .social-item i { margin-right: 4px; }
     .alert-box {
       position: absolute;
       top: 10px;
       left: 50%;
       transform: translateX(-50%);
-      padding: 8px 15px;
+      padding: 6px 12px;
       border: 2px solid #fff;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      background: rgba(0,0,0,0.3);
       color: #fff;
+      font-size: 14px;
       font-weight: bold;
       animation: glowText 2s ease-in-out infinite alternate;
     }
-    .chat-box {
-      position: absolute;
-      top: 80px;
-      right: 10px;
-      width: 120px;
-      height: 200px;
-      border: 2px solid #fff;
-      border-radius: 10px;
-      padding: 6px;
-      background: rgba(0,0,0,0.4);
-      color: #fff;
-      font-size: 12px;
-      overflow-y: auto;
-      animation: glowBorder 3s ease-in-out infinite alternate;
-    }
     @keyframes glowBorder {
-      from { box-shadow: 0 0 10px #a3dfff, 0 0 25px #e0f7ff; }
-      to { box-shadow: 0 0 30px #73cfff, 0 0 60px #b3ecff; }
+      from { box-shadow: 0 0 10px #a3dfff, 0 0 20px #e0f7ff; }
+      to { box-shadow: 0 0 20px #73cfff, 0 0 40px #b3ecff; }
     }
     @keyframes glowText {
-      from { text-shadow: 0 0 5px currentColor, 0 0 15px currentColor; }
-      to { text-shadow: 0 0 20px currentColor, 0 0 40px currentColor; }
+      from { text-shadow: 0 0 5px currentColor; }
+      to { text-shadow: 0 0 15px currentColor; }
     }
     .snowflake {
       position: absolute;
@@ -120,10 +107,6 @@
       <div class="social-item"><i class="fab fa-youtube"></i>@youtube</div>
     </div>
     <div class="alert-box">🎉 New Follower!</div>
-    <div class="chat-box" id="chat-box">
-      <p>User1: Hello!</p>
-      <p>User2: Nice stream ❄</p>
-    </div>
   </div>
 
   <script>
