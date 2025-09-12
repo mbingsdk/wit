@@ -12,7 +12,7 @@
     }
     * {margin:0;padding:0;box-sizing:border-box;}
     body {
-      background: transparent; /* transparan penuh */
+      background: transparent;
       font-family: Arial, sans-serif;
       color: var(--text);
       display: flex;
@@ -24,30 +24,30 @@
       flex-direction: column;
       align-items: center;
       gap: 12px;
-      width: 400px; /* patokan layout */
+      width: 400px;
     }
     .game-container {
       position: relative;
       width: 100%;
-      aspect-ratio: 4/3; /* game 4:3 */
+      aspect-ratio: 4/3;
       background: rgba(0,0,0,0.5);
       border-radius: 14px;
       border: 3px solid rgba(115,207,255,0.6);
       box-shadow: 0 0 18px rgba(115,207,255,0.5);
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
     .title-box {
-      position: absolute;
-      top: -16px;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 4px 12px;
+      margin-top: 6px;
+      padding: 4px 14px;
       background: var(--bg-panel);
       border: 2px solid rgba(115,207,255,0.35);
       border-radius: 8px;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: bold;
-      text-shadow: 0 0 6px rgba(115,207,255,0.8);
+      text-shadow: 0 0 8px rgba(115,207,255,0.9);
     }
     .social-box {
       position: absolute;
@@ -137,12 +137,29 @@
     }
     .music-box {
       width: 100%;
-      padding: 8px 12px;
+      padding: 10px 12px;
       background: var(--bg-panel);
       border-radius: 10px;
       border: 2px solid rgba(115,207,255,0.25);
       font-size: 12px;
       text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .music-controls {
+      display: flex;
+      gap: 16px;
+      font-size: 14px;
+    }
+    .music-controls i {
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .music-controls i:hover {
+      transform: scale(1.2);
+      color: var(--accent);
     }
     .note-panel {
       width: 100%;
@@ -181,7 +198,15 @@
       </div>
     </div>
 
-    <div class="music-box">Now Playing: ❄ Winter Lofi ❄</div>
+    <div class="music-box">
+      <div>Now Playing: ❄ Winter Lofi ❄</div>
+      <div class="music-controls">
+        <i class="fa-solid fa-backward-step"></i>
+        <i class="fa-solid fa-play"></i>
+        <i class="fa-solid fa-forward-step"></i>
+      </div>
+    </div>
+
     <div class="note-panel">Catatan: Jangan lupa cek Discord untuk update event!</div>
   </div>
 
