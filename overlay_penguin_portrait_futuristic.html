@@ -45,10 +45,43 @@ html, body {
   box-shadow: 0 0 18px rgba(115,207,255,0.25);
 }
 
+/* Social Rotator */
+.social-box {
+  position: absolute;
+  top: 2%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 10px;
+  background: var(--bg-panel);
+  border-radius: 8px;
+  border: 2px solid rgba(115,207,255,0.25);
+  font-size: 11px;
+  color: var(--text);
+  box-shadow: 0 0 12px rgba(115,207,255,0.15);
+  white-space: nowrap;
+}
+
+/* Note Panel */
+.note-panel {
+  position: absolute;
+  top: 52%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  padding: 6px 10px;
+  background: var(--bg-panel);
+  border-radius: 10px;
+  border: 2px solid rgba(115,207,255,0.25);
+  font-size: 11px;
+  text-align: center;
+  box-shadow: 0 0 12px rgba(115,207,255,0.15);
+  color: var(--text);
+}
+
 /* Bottom row for follower + map */
 .bottom-row {
   position: absolute;
-  top: 65%; /* dinaikkan biar ga numpuk musik */
+  top: 65%;
   left: 50%;
   transform: translateX(-50%);
   width: 86%;
@@ -139,6 +172,18 @@ html, body {
   max-height: 40px;
 }
 
+/* Cursor blink for map */
+.map-text::after {
+  content: "|";
+  margin-left: 2px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%,50% { opacity: 1; }
+  51%,100% { opacity: 0; }
+}
+
 /* Music Player */
 .music-player {
   position: absolute;
@@ -163,6 +208,12 @@ html, body {
 <div class="wrap">
   <!-- Game Screen -->
   <div class="game-screen"></div>
+
+  <!-- Social Rotator -->
+  <div class="social-box"><span id="social-text"></span></div>
+
+  <!-- Note Panel -->
+  <div class="note-panel">Catatan penting ditaruh di sini...</div>
 
   <!-- Bottom Row -->
   <div class="bottom-row">
@@ -218,6 +269,23 @@ function cycleMaps() {
 }
 cycleMaps();
 setInterval(cycleMaps, 15000);
+
+// Social rotator
+const socialText = document.getElementById("social-text");
+const socials = [
+  "Roblox: @user123",
+  "TikTok: @streamer",
+  "YouTube: channelX",
+  "Instagram: @iguser",
+  "Discord: myserver"
+];
+let sidx = 0;
+function cycleSocials() {
+  socialText.textContent = socials[sidx];
+  sidx = (sidx + 1) % socials.length;
+}
+cycleSocials();
+setInterval(cycleSocials, 7000);
 </script>
 </body>
 </html>
