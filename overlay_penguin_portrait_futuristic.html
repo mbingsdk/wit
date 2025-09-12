@@ -6,142 +6,127 @@
 <title>Portrait Overlay Snow Futuristic</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-  :root{
-    --accent:#73cfff;
-    --accent-2:#b3ecff;
-    --bg-panel: rgba(0,0,20,0.55);
-    --text:#eaf6ff;
-  }
-  html,body{
-    height:100%;
-    margin:0;
-    background:transparent;  /* transparan */
-    font-family:"Orbitron", sans-serif;
-  }
-  .wrap{
-    width:100%;
-    height:100%;
-    aspect-ratio:9/16;       /* jaga rasio portrait */
-    max-width:360px;         /* ukuran aman */
-    margin:auto;
-    position:relative;
-    background:transparent;
-    overflow:hidden;
-    pointer-events:none;
-  }
+:root{
+  --accent:#73cfff;
+  --accent-2:#b3ecff;
+  --bg-panel: rgba(0,0,20,0.55);
+  --text:#eaf6ff;
+}
+html,body{
+  height:100%; margin:0;
+  background:transparent;
+  font-family:"Orbitron", sans-serif;
+}
+.wrap{
+  width:100%; height:100%;
+  aspect-ratio:9/16;
+  max-width:360px; margin:auto;
+  position:relative;
+  background:transparent;
+  overflow:hidden;
+  pointer-events:none;
+}
 
-  /* SOCIAL ROTATOR (atas) */
-  .topbar{
-    position:absolute;
-    top:20px; left:50%;
-    transform:translateX(-50%);
-    padding:6px 12px;
-    min-width:180px; max-width:300px;
-    border-radius:10px;
-    background:var(--bg-panel);
-    border:2px solid rgba(115,207,255,0.15);
-    text-align:center;
-  }
-  .social-item{
-    color:var(--accent); font-weight:600;
-    font-size:13px; opacity:0; transition:all .5s ease;
-  }
-  .social-item.show{opacity:1;}
+/* Social rotator (top) */
+.topbar{
+  position:absolute; top:20px; left:50%;
+  transform:translateX(-50%);
+  padding:6px 12px;
+  min-width:180px; max-width:300px;
+  border-radius:10px;
+  background:var(--bg-panel);
+  border:2px solid rgba(115,207,255,0.15);
+  text-align:center;
+}
+.social-item{
+  color:var(--accent); font-weight:600;
+  font-size:13px; opacity:0; transition:all .5s ease;
+}
+.social-item.show{opacity:1;}
 
-  /* GAME FRAME (tengah atas) */
-  .game-frame{
-    position:absolute;
-    top:10%; left:50%;
-    transform:translateX(-50%);
-    width:88%; height:50%;
-    border:3px solid rgba(115,207,255,0.3);
-    border-radius:16px;
-    background:rgba(255,255,255,0.02);
-    box-shadow:0 0 20px rgba(115,207,255,0.2);
-  }
+/* Game frame */
+.game-frame{
+  position:absolute;
+  top:10%; left:50%; transform:translateX(-50%);
+  width:88%; height:50%;
+  border:3px solid rgba(115,207,255,0.3);
+  border-radius:16px;
+  background:rgba(255,255,255,0.02);
+  box-shadow:0 0 20px rgba(115,207,255,0.2);
+}
 
-  /* MAP INFO (bawah game) */
-  .map-panel{
-    position:absolute;
-    top:62%; left:50%;
-    transform:translateX(-50%);
-    padding:6px 12px;
-    border-radius:8px;
-    background:var(--bg-panel);
-    border:2px solid rgba(115,207,255,0.2);
-    font-size:13px; color:var(--text);
-    white-space:nowrap;
-  }
-  .map-text{
-    border-right:2px solid var(--accent);
-    padding-right:4px;
-  }
+/* Bottom panel (follower + map) */
+.bottom-panel{
+  position:absolute;
+  top:63%; left:50%; transform:translateX(-50%);
+  width:90%; padding:8px 14px;
+  display:flex; justify-content:space-between; align-items:center;
+  border-radius:12px;
+  background:var(--bg-panel);
+  border:2px solid rgba(115,207,255,0.25);
+  box-shadow:0 0 15px rgba(115,207,255,0.15);
+}
 
-  /* FOLLOWER (lingkaran kecil) */
-  .follower-card{
-    position:absolute;
-    bottom:110px; left:50%;
-    transform:translateX(-50%);
-    width:90px; height:90px;
-    display:grid; place-items:center;
-    border-radius:50%;
-    background:rgba(0,0,20,0.3);
-    border:2px solid rgba(115,207,255,0.3);
-  }
-  .follower-card svg{
-    width:70px; height:70px;
-    transform:rotate(-90deg);
-  }
-  .progress-bg{stroke:rgba(255,255,255,0.15);stroke-width:6}
-  .progress-fg{stroke:var(--accent);stroke-width:6;stroke-linecap:round;stroke-dasharray:440;stroke-dashoffset:440}
-  .follower-num{
-    position:absolute; font-size:12px; font-weight:700;
-    color:var(--text); text-shadow:0 0 6px var(--accent);
-  }
+/* Follower progress circle */
+.follower-card{
+  position:relative;
+  width:70px; height:70px;
+  display:grid; place-items:center;
+}
+.follower-card svg{width:70px; height:70px; transform:rotate(-90deg);}
+.progress-bg{stroke:rgba(255,255,255,0.15);stroke-width:6}
+.progress-fg{stroke:var(--accent);stroke-width:6;stroke-linecap:round;stroke-dasharray:440;stroke-dashoffset:440}
+.follower-num{
+  position:absolute; font-size:11px; font-weight:700;
+  color:var(--text); text-shadow:0 0 6px var(--accent);
+}
 
-  /* MUSIC PLAYER (footer) */
-  .music-player{
-    position:absolute;
-    bottom:20px; left:50%; transform:translateX(-50%);
-    width:85%; padding:8px 12px;
-    border-radius:12px;
-    background:var(--bg-panel);
-    border:2px solid rgba(115,207,255,0.2);
-    display:flex; align-items:center; justify-content:space-between;
-  }
-  .song-info{flex:1;overflow:hidden}
-  .song-title{font-size:13px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .song-artist{font-size:11px;color:rgba(227,244,255,0.7)}
-  .equalizer{display:flex;gap:3px;align-items:flex-end;height:20px}
-  .bar{width:4px;background:var(--accent);border-radius:2px;animation:bar 800ms linear infinite}
-  .bar:nth-child(2){animation-delay:150ms}
-  .bar:nth-child(3){animation-delay:300ms}
-  .bar:nth-child(4){animation-delay:450ms}
-  @keyframes bar{
-    0%{height:4px}
-    50%{height:16px}
-    100%{height:6px}
-  }
+/* Map info typing */
+.map-panel{flex:1; text-align:right;}
+.map-text{
+  font-size:13px; color:var(--text);
+  border-right:2px solid var(--accent);
+  padding-right:4px;
+}
 
-  /* SNOW */
-  .snowflake{
-    position:absolute;top:-20px;color:#fff;opacity:0.9;
-    animation:fall linear forwards;pointer-events:none;
-  }
-  @keyframes fall{0%{transform:translateY(-10px)}100%{transform:translateY(650px)}}
+/* Music player */
+.music-player{
+  position:absolute;
+  bottom:20px; left:50%; transform:translateX(-50%);
+  width:85%; padding:8px 12px;
+  border-radius:12px;
+  background:var(--bg-panel);
+  border:2px solid rgba(115,207,255,0.2);
+  display:flex; align-items:center; justify-content:space-between;
+}
+.song-info{flex:1;overflow:hidden}
+.song-title{font-size:13px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.song-artist{font-size:11px;color:rgba(227,244,255,0.7)}
+.equalizer{display:flex;gap:3px;align-items:flex-end;height:20px}
+.bar{width:4px;background:var(--accent);border-radius:2px;animation:bar 800ms linear infinite}
+.bar:nth-child(2){animation-delay:150ms}
+.bar:nth-child(3){animation-delay:300ms}
+.bar:nth-child(4){animation-delay:450ms}
+@keyframes bar{0%{height:4px}50%{height:16px}100%{height:6px}}
+
+/* Snow */
+.snowflake{
+  position:absolute;top:-20px;color:#fff;opacity:0.9;
+  animation:fall linear forwards;pointer-events:none;
+}
+@keyframes fall{0%{transform:translateY(-10px)}100%{transform:translateY(650px)}}
 </style>
 </head>
 <body>
-  <div class="wrap" id="wrap">
-    <!-- Social -->
-    <div class="topbar"><div class="social-item" id="social-item"></div></div>
+<div class="wrap" id="wrap">
+  <!-- Social -->
+  <div class="topbar"><div class="social-item" id="social-item"></div></div>
 
-    <!-- Game Frame -->
-    <div class="game-frame"></div>
+  <!-- Game -->
+  <div class="game-frame"></div>
 
-    <!-- Map Info -->
-    <div class="map-panel"><span id="map-text" class="map-text"></span></div>
-
+  <!-- Bottom panel -->
+  <div class="bottom-panel">
     <!-- Follower -->
     <div class="follower-card">
       <svg viewBox="0 0 120 120">
@@ -150,18 +135,21 @@
       </svg>
       <div id="follower-num" class="follower-num">0</div>
     </div>
+    <!-- Map -->
+    <div class="map-panel"><span id="map-text" class="map-text"></span></div>
+  </div>
 
-    <!-- Music -->
-    <div class="music-player">
-      <div class="song-info">
-        <div class="song-title" id="song-title">— not playing —</div>
-        <div class="song-artist" id="song-artist"></div>
-      </div>
-      <div class="equalizer">
-        <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
-      </div>
+  <!-- Music -->
+  <div class="music-player">
+    <div class="song-info">
+      <div class="song-title" id="song-title">— not playing —</div>
+      <div class="song-artist" id="song-artist"></div>
+    </div>
+    <div class="equalizer">
+      <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
     </div>
   </div>
+</div>
 
 <script>
 /* Snow effect */
