@@ -1,251 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Portrait Snow Overlay</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-:root {
-  --bg-panel: rgba(15, 20, 35, 0.65);
-  --accent: #73cfff;
-  --text: #fff;
-}
-
-html, body {
-  margin: 0;
-  height: 100%;
-  background: transparent;
-  font-family: 'Segoe UI', sans-serif;
-  color: var(--text);
-}
-
-.wrap {
-  width: 100%;
-  height: 100%;
-  max-width: 360px;
-  aspect-ratio: 9/16;
-  margin: auto;
-  position: relative;
-  background: transparent;
-  overflow: hidden;
-}
-
-/* Title Panel */
-.title-box {
-  position: absolute;
-  top: 2%;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 8px 16px;
-  background: var(--bg-panel);
-  border: 2px solid rgba(115,207,255,0.25);
-  border-radius: 10px;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  color: var(--accent);
-  text-shadow: 0 0 6px rgba(115,207,255,0.8);
-  box-shadow: 0 0 12px rgba(115,207,255,0.15);
-}
-
-/* Game screen */
-.game-screen {
-  position: absolute;
-  top: 10%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 90%;
-  aspect-ratio: 9/16;
-  background: rgba(255,255,255,0.05);
-  border: 2px solid rgba(115,207,255,0.3);
-  border-radius: 16px;
-  box-shadow: 0 0 18px rgba(115,207,255,0.25);
-}
-
-/* Social box */
-.social-box {
-  position: absolute;
-  top: 62%;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 12px;
-  background: var(--bg-panel);
-  border-radius: 8px;
-  border: 1px solid rgba(115,207,255,0.25);
-  font-size: 11px;
-  opacity: 0;
-  transition: opacity .6s;
-}
-.social-icon { font-size: 14px; color: var(--accent); }
-
-/* Bottom row */
-.bottom-row {
-  position: absolute;
-  top: 70%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 86%;
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-}
-.panel-box {
-  flex: 1;
-  min-height: 100px;
-  padding: 8px;
-  border-radius: 12px;
-  background: var(--bg-panel);
-  border: 2px solid rgba(115,207,255,0.25);
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  box-shadow: 0 0 12px rgba(115,207,255,0.15);
-}
-.panel-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  width: 100%;
-  height: 100%;
-}
-.panel-header {
-  font-size: 10px;
-  font-weight: 700;
-  color: var(--accent);
-  letter-spacing: 1px;
-  text-shadow: 0 0 6px rgba(115,207,255,0.8);
-}
-
-/* Follower circle */
-.follower-card {
-  position: relative;
-  width: 90px;
-  height: 90px;
-}
-.follower-card svg {
-  width: 100%;
-  height: 100%;
-  transform: rotate(-90deg);
-}
-.progress-bg {
-  fill: none;
-  stroke: rgba(255,255,255,0.15);
-  stroke-width: 10;
-}
-.progress-fg {
-  fill: none;
-  stroke: var(--accent);
-  stroke-width: 10;
-  stroke-linecap: round;
-  stroke-dasharray: 314;
-  stroke-dashoffset: 80;
-  filter: drop-shadow(0 0 6px var(--accent));
-}
-.follower-num {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 12px;
-  font-weight: 600;
-  text-align: center;
-}
-
-/* Map */
-.map-text {
-  font-size: 12px;
-  color: var(--text);
-  text-align: center;
-  white-space: normal;
-  word-break: break-word;
-  overflow: hidden;
-  max-height: 40px;
-}
-.map-text::after {
-  content: "|";
-  margin-left: 2px;
-  animation: blink 1s infinite;
-}
-@keyframes blink { 0%,50%{opacity:1;} 51%,100%{opacity:0;} }
-
-/* Music player */
-.music-player {
-  position: absolute;
-  bottom: 12%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 80%;
-  padding: 8px 12px;
-  background: var(--bg-panel);
-  border-radius: 12px;
-  border: 2px solid rgba(115,207,255,0.25);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 11px;
-  box-shadow: 0 0 12px rgba(115,207,255,0.15);
-}
-.music-icon { font-size: 14px; color: var(--accent); }
-.progress-bar {
-  flex: 1;
-  height: 4px;
-  background: rgba(255,255,255,0.2);
-  border-radius: 2px;
-  overflow: hidden;
-  position: relative;
-}
-.progress-bar::after {
-  content: "";
-  position: absolute;
-  left: 0; top: 0;
-  height: 100%;
-  width: 40%;
-  background: var(--accent);
-  animation: progressMove 6s linear infinite;
-}
-@keyframes progressMove { 0%{width:0%;} 100%{width:100%;} }
-
-/* Note */
-.note-panel {
-  position: absolute;
-  bottom: 3%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 85%;
-  padding: 6px 10px;
-  background: var(--bg-panel);
-  border-radius: 10px;
-  border: 2px solid rgba(115,207,255,0.25);
-  font-size: 11px;
-  text-align: center;
-  box-shadow: 0 0 12px rgba(115,207,255,0.15);
-}
-</style>
+  <meta charset="UTF-8">
+  <title>Penguin Antarctica Overlay</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --bg-panel: rgba(20, 30, 40, 0.75);
+      --accent: #73cfff;
+      --text: #fff;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: linear-gradient(to bottom, #0a1a2f, #153a5c);
+      font-family: Arial, sans-serif;
+      color: var(--text);
+      overflow: hidden;
+      height: 100vh;
+    }
+    .overlay {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      width: 100%;
+      padding: 10px;
+      gap: 10px;
+    }
+    .title-box {
+      padding: 8px 16px;
+      background: var(--bg-panel);
+      border: 2px solid rgba(115,207,255,0.25);
+      border-radius: 10px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: bold;
+      text-shadow: 0 0 8px rgba(115,207,255,0.8);
+    }
+    .game-screen {
+      flex: 0 0 70%;
+      aspect-ratio: 9/16;
+      background: #000;
+      border: 4px solid rgba(115,207,255,0.35);
+      border-radius: 14px;
+      box-shadow: 0 0 25px rgba(115,207,255,0.4);
+      position: relative;
+      overflow: hidden;
+    }
+    .social-box {
+      min-width: 240px;
+      padding: 8px 12px;
+      background: var(--bg-panel);
+      border-radius: 10px;
+      border: 2px solid rgba(115,207,255,0.25);
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      transition: opacity 0.8s;
+    }
+    .bottom-row {
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      width: 90%;
+      gap: 12px;
+    }
+    .panel-box {
+      flex: 1;
+      min-height: 110px;
+      padding: 8px;
+      border-radius: 12px;
+      background: var(--bg-panel);
+      border: 2px solid rgba(115,207,255,0.25);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 0 12px rgba(115,207,255,0.15);
+    }
+    .panel-header {
+      font-size: 12px;
+      font-weight: bold;
+      color: var(--accent);
+      margin-bottom: 6px;
+      text-shadow: 0 0 6px rgba(115,207,255,0.8);
+    }
+    .follower-card {
+      position: relative;
+      width: 80px; height: 80px;
+    }
+    .follower-card svg {
+      transform: rotate(-90deg);
+      width: 100%; height: 100%;
+    }
+    .progress-bg {
+      fill: none;
+      stroke: rgba(255,255,255,0.1);
+      stroke-width: 10;
+    }
+    .progress-fg {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 10;
+      stroke-linecap: round;
+      stroke-dasharray: 314;
+      stroke-dashoffset: 157;
+      transition: stroke-dashoffset 1s;
+      filter: drop-shadow(0 0 6px var(--accent));
+    }
+    .follower-num {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      font-size: 13px;
+      font-weight: bold;
+    }
+    .map-text {
+      font-size: 13px;
+      text-align: center;
+      white-space: normal;
+      word-break: break-word;
+      max-height: 40px;
+      overflow: hidden;
+    }
+    .map-text::after {
+      content:"|";
+      margin-left:2px;
+      animation: blink 1s infinite;
+    }
+    @keyframes blink {
+      0%,50%{opacity:1;}
+      51%,100%{opacity:0;}
+    }
+    .music-box {
+      width: 70%;
+      padding: 8px 12px;
+      background: var(--bg-panel);
+      border-radius: 10px;
+      border: 2px solid rgba(115,207,255,0.25);
+      font-size: 13px;
+      text-align: center;
+      box-shadow: 0 0 12px rgba(115,207,255,0.15);
+    }
+    .note-panel {
+      width: 70%;
+      padding: 8px 12px;
+      background: var(--bg-panel);
+      border-radius: 10px;
+      border: 2px solid rgba(115,207,255,0.25);
+      font-size: 12px;
+      text-align: center;
+      box-shadow: 0 0 12px rgba(115,207,255,0.15);
+    }
+  </style>
 </head>
 <body>
-<div class="wrap">
+  <div class="overlay">
+    <div class="title-box">PENGUIN ANTARCTICA</div>
 
-  <!-- Title -->
-  <div class="title-box">PENGUIN ANTARCTICA</div>
+    <div class="game-screen" id="game-screen"></div>
 
-  <!-- Game -->
-  <div class="game-screen"></div>
+    <div class="social-box" id="social-box">
+      <i class="fab fa-roblox"></i><span id="social-text"></span>
+    </div>
 
-  <!-- Social -->
-  <div class="social-box" id="social-box">
-    <i class="fab fa-roblox social-icon"></i>
-    <span id="social-text"></span>
-  </div>
-
-  <!-- Bottom Row -->
-  <div class="bottom-row">
-    <div class="panel-box">
-      <div class="panel-content">
+    <div class="bottom-row">
+      <div class="panel-box">
         <div class="panel-header">TARGET FOLLOWER</div>
         <div class="follower-card">
           <svg viewBox="0 0 120 120">
@@ -255,70 +176,70 @@ html, body {
           <div id="follower-num" class="follower-num">350 / 500</div>
         </div>
       </div>
-    </div>
-    <div class="panel-box">
-      <div class="panel-content">
+      <div class="panel-box">
         <div class="panel-header">MAP</div>
         <span id="map-text" class="map-text"></span>
       </div>
     </div>
+
+    <div class="music-box">Now Playing: ❄ Winter Lofi ❄</div>
+
+    <div class="note-panel">Catatan: Jangan lupa cek Discord untuk update event!</div>
   </div>
 
-  <!-- Music -->
-  <div class="music-player">
-    <i class="fas fa-music music-icon"></i>
-    <div>Music Title - Artist</div>
-    <div class="progress-bar"></div>
-  </div>
+  <script>
+    // follower progress
+    const progress = document.querySelector('.progress-fg');
+    let current = 350, target = 500;
+    let dasharray = 314;
+    let percent = current/target;
+    progress.style.strokeDashoffset = dasharray - dasharray*percent;
 
-  <!-- Note -->
-  <div class="note-panel">Catatan penting ditaruh di sini...</div>
-</div>
+    // map typing effect
+    const maps = ["Glacier Valley", "Frozen Cavern of Eternity", "Antarctic Base X-17"];
+    let mapIndex=0, charIndex=0, typingForward=true;
+    const mapText = document.getElementById("map-text");
+    function typeMap(){
+      let full = maps[mapIndex];
+      if(typingForward){
+        charIndex++;
+        if(charIndex===full.length){
+          typingForward=false;
+          setTimeout(typeMap,1500);return;
+        }
+      } else {
+        charIndex--;
+        if(charIndex===0){
+          typingForward=true;
+          mapIndex=(mapIndex+1)%maps.length;
+        }
+      }
+      mapText.textContent = full.substring(0,charIndex);
+      setTimeout(typeMap, typingForward?120:60);
+    }
+    typeMap();
 
-<script>
-// Map typing
-const mapText = document.getElementById("map-text");
-const maps = ["Snow Valley Expedition", "Crystal Ice Cavern", "Frozen Tundra Base"];
-let idx = 0;
-function typeMap(text) {
-  mapText.textContent = "";
-  let i = 0;
-  let interval = setInterval(() => {
-    if (i < text.length) {
-      mapText.textContent += text[i];
-      i++;
-    } else clearInterval(interval);
-  }, 100);
-}
-function cycleMaps() {
-  typeMap(maps[idx]);
-  idx = (idx + 1) % maps.length;
-}
-cycleMaps();
-setInterval(cycleMaps, 15000);
-
-// Social rotator
-const socialBox = document.getElementById("social-box");
-const socialText = document.getElementById("social-text");
-const socials = [
-  {icon:"fa-roblox", text:"Roblox: @user123"},
-  {icon:"fa-tiktok", text:"TikTok: @streamer"},
-  {icon:"fa-youtube", text:"YouTube: channelX"},
-  {icon:"fa-instagram", text:"Instagram: @iguser"},
-  {icon:"fa-discord", text:"Discord: myserver"}
-];
-let sidx = 0;
-function cycleSocials() {
-  socialBox.style.opacity = 0;
-  setTimeout(() => {
-    socialBox.querySelector("i").className = `fab ${socials[sidx].icon} social-icon`;
-    socialText.textContent = socials[sidx].text;
-    socialBox.style.opacity = 1;
-    sidx = (sidx + 1) % socials.length;
-  }, 600);
-}
-cycleSocials();
-setInterval(cycleSocials, 7000);
-</script>
+    // social rotator
+    const socialBox=document.getElementById("social-box");
+    const socialText=document.getElementById("social-text");
+    const socials=[
+      {icon:"fa-roblox", text:"Roblox: @user123"},
+      {icon:"fa-tiktok", text:"TikTok: @streamer"},
+      {icon:"fa-youtube", text:"YouTube: channelX"},
+      {icon:"fa-instagram", text:"Instagram: @iguser"},
+      {icon:"fa-discord", text:"Discord: myserver"},
+    ];
+    let sidx=0;
+    function cycleSocials(){
+      const s=socials[sidx];
+      socialBox.querySelector("i").className="fab "+s.icon;
+      socialText.textContent=s.text;
+      socialBox.style.opacity=1;
+      setTimeout(()=>{socialBox.style.opacity=0;},5500);
+      sidx=(sidx+1)%socials.length;
+    }
+    cycleSocials();
+    setInterval(cycleSocials,6000);
+  </script>
 </body>
 </html>
