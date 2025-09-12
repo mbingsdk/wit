@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Portrait Snow Overlay</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 :root {
   --bg-panel: rgba(15, 20, 35, 0.65);
@@ -30,6 +31,24 @@ html, body {
   overflow: hidden;
 }
 
+/* Title Panel */
+.title-box {
+  position: absolute;
+  top: 2%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px 16px;
+  background: var(--bg-panel);
+  border: 2px solid rgba(115,207,255,0.25);
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+  text-shadow: 0 0 6px rgba(115,207,255,0.8);
+  box-shadow: 0 0 12px rgba(115,207,255,0.15);
+}
+
 /* Game screen */
 .game-screen {
   position: absolute;
@@ -44,29 +63,16 @@ html, body {
   box-shadow: 0 0 18px rgba(115,207,255,0.25);
 }
 
-/* Title */
-.title {
-  position: absolute;
-  top: 3%;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 16px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: var(--accent);
-  text-shadow: 0 0 8px rgba(115,207,255,0.9), 0 0 16px rgba(115,207,255,0.6);
-}
-
 /* Social box */
 .social-box {
   position: absolute;
-  top: 64%;
+  top: 62%;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 10px;
+  gap: 8px;
+  padding: 6px 12px;
   background: var(--bg-panel);
   border-radius: 8px;
   border: 1px solid rgba(115,207,255,0.25);
@@ -74,7 +80,7 @@ html, body {
   opacity: 0;
   transition: opacity .6s;
 }
-.social-icon { font-size: 14px; }
+.social-icon { font-size: 14px; color: var(--accent); }
 
 /* Bottom row */
 .bottom-row {
@@ -170,7 +176,7 @@ html, body {
 /* Music player */
 .music-player {
   position: absolute;
-  bottom: 8%;
+  bottom: 12%;
   left: 50%;
   transform: translateX(-50%);
   width: 80%;
@@ -207,7 +213,7 @@ html, body {
 /* Note */
 .note-panel {
   position: absolute;
-  bottom: 2%;
+  bottom: 3%;
   left: 50%;
   transform: translateX(-50%);
   width: 85%;
@@ -223,13 +229,16 @@ html, body {
 </head>
 <body>
 <div class="wrap">
-  <div class="title">PENGUIN ANTARCTICA</div>
 
+  <!-- Title -->
+  <div class="title-box">PENGUIN ANTARCTICA</div>
+
+  <!-- Game -->
   <div class="game-screen"></div>
 
-  <!-- Social above bottom row -->
+  <!-- Social -->
   <div class="social-box" id="social-box">
-    <span class="social-icon" id="social-icon">🎮</span>
+    <i class="fab fa-roblox social-icon"></i>
     <span id="social-text"></span>
   </div>
 
@@ -257,7 +266,7 @@ html, body {
 
   <!-- Music -->
   <div class="music-player">
-    <span class="music-icon">🎵</span>
+    <i class="fas fa-music music-icon"></i>
     <div>Music Title - Artist</div>
     <div class="progress-bar"></div>
   </div>
@@ -290,20 +299,19 @@ setInterval(cycleMaps, 15000);
 
 // Social rotator
 const socialBox = document.getElementById("social-box");
-const socialIcon = document.getElementById("social-icon");
 const socialText = document.getElementById("social-text");
 const socials = [
-  {icon:"🎮", text:"Roblox: @user123"},
-  {icon:"🎵", text:"TikTok: @streamer"},
-  {icon:"▶️", text:"YouTube: channelX"},
-  {icon:"📸", text:"Instagram: @iguser"},
-  {icon:"💬", text:"Discord: myserver"}
+  {icon:"fa-roblox", text:"Roblox: @user123"},
+  {icon:"fa-tiktok", text:"TikTok: @streamer"},
+  {icon:"fa-youtube", text:"YouTube: channelX"},
+  {icon:"fa-instagram", text:"Instagram: @iguser"},
+  {icon:"fa-discord", text:"Discord: myserver"}
 ];
 let sidx = 0;
 function cycleSocials() {
   socialBox.style.opacity = 0;
   setTimeout(() => {
-    socialIcon.textContent = socials[sidx].icon;
+    socialBox.querySelector("i").className = `fab ${socials[sidx].icon} social-icon`;
     socialText.textContent = socials[sidx].text;
     socialBox.style.opacity = 1;
     sidx = (sidx + 1) % socials.length;
