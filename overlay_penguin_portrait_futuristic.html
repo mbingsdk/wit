@@ -1,313 +1,288 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Futuristic Penguin Overlay</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    body {
-      margin: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      background: transparent;
-      overflow: hidden;
-      font-family: "Orbitron", sans-serif;
-    }
-    .container {
-      width: 360px;
-      height: 640px;
-      position: relative;
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Portrait Overlay - Snow Futuristic</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+  :root{
+    --accent:#73cfff;
+    --accent-2:#b3ecff;
+    --bg-panel: rgba(0,0,20,0.55);
+    --glass: rgba(255,255,255,0.04);
+    --text:#eaf6ff;
+    --container-w:360px;
+    --container-h:640px;
+  }
+  html,body{height:100%;margin:0;background:transparent;font-family:Inter, "Orbitron", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
+  .wrap{width:var(--container-w);height:var(--container-h);position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;overflow:hidden}
+  /* TOP - Social Rotator */
+  .topbar{position:absolute;top:8px;left:50%;transform:translateX(-50%);min-width:180px;max-width:320px;padding:6px 12px;border-radius:10px;background:var(--bg-panel);border:2px solid rgba(115,207,255,0.12);box-shadow:0 6px 20px rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;backdrop-filter: blur(4px);z-index:40}
+  .social-item{color:var(--accent);font-weight:600;display:flex;align-items:center;gap:8px;font-size:13px;opacity:0;transform:translateY(-6px);transition:all .5s ease;pointer-events:none}
+  .social-item.show{opacity:1;transform:translateY(0)}
 
-    /* GAME FRAME */
-    .game-frame {
-      width: 90%;
-      height: 50%;
-      position: absolute;
-      top: 10%;
-      left: 50%;
-      transform: translateX(-50%);
-      border: 4px solid #73cfff;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.05);
-      animation: neonPulse 2s infinite alternate;
-    }
-    @keyframes neonPulse {
-      from { box-shadow: 0 0 10px #73cfff, 0 0 20px #b3ecff; }
-      to { box-shadow: 0 0 25px #a3dfff, 0 0 40px #e0f7ff; }
-    }
+  /* GAME FRAME (center top ~50% height) */
+  .game-frame{
+    position:absolute;
+    top:8%;
+    left:50%;
+    transform:translateX(-50%);
+    width:88%;
+    height:52%;
+    border-radius:16px;
+    background:var(--glass);
+    border:3px solid rgba(115,207,255,0.12);
+    box-shadow:0 8px 30px rgba(115,207,255,0.06), inset 0 0 30px rgba(115,207,255,0.02);
+    overflow:hidden;
+    z-index:10;
+  }
+  /* optional center placeholder (remove when you put actual game capture behind) */
+  .game-placeholder{width:100%;height:100%;display:grid;place-items:center;color:rgba(255,255,255,0.12);font-size:14px}
 
-    /* MAP INFO (typing style) */
-    .map-info {
-      position: absolute;
-      top: 62%;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 6px 12px;
-      border: 2px solid #73cfff;
-      border-radius: 10px;
-      background: rgba(0,0,20,0.6);
-      color: #fff;
-      font-size: 14px;
-      white-space: nowrap;
-      overflow: hidden;
-      width: fit-content;
-      max-width: 80%;
-      text-align: center;
-    }
-    .map-text {
-      display: inline-block;
-      border-right: 2px solid #73cfff;
-      white-space: nowrap;
-      overflow: hidden;
-      animation: blinkCursor 0.8s infinite;
-    }
-    @keyframes blinkCursor {
-      0%, 50% { border-color: #73cfff; }
-      51%, 100% { border-color: transparent; }
-    }
+  /* MAP INFO (typing) - directly under game */
+  .map-panel{
+    position:absolute;
+    top: calc(8% + 52% ); /* just below game frame */
+    left:50%;
+    transform:translateX(-50%);
+    padding:8px 14px;border-radius:10px;background:var(--bg-panel);
+    color:var(--text);border:2px solid rgba(115,207,255,0.14);font-weight:600;font-size:13px;min-width:140px;max-width:90%;
+    text-align:center;white-space:nowrap;overflow:hidden;z-index:30;
+  }
+  .map-text{border-right:2px solid var(--accent);padding-right:6px;display:inline-block;white-space:nowrap;overflow:hidden}
+  /* follower - small circle, sits slightly above bottom-middle */
+  .follower-card{
+    position:absolute;
+    bottom:120px;
+    left:50%;
+    transform:translateX(-50%);
+    width:88px;height:88px;border-radius:999px;
+    display:grid;place-items:center;background:linear-gradient(180deg, rgba(115,207,255,0.06), rgba(115,207,255,0.02));
+    border:2px solid rgba(115,207,255,0.12);box-shadow:0 8px 30px rgba(0,0,0,0.45);z-index:25;
+  }
+  /* svg progress styling */
+  .follower-card svg{width:68px;height:68px;transform:rotate(-90deg)}
+  .progress-bg{stroke:rgba(255,255,255,0.12);stroke-width:6}
+  .progress-fg{stroke:var(--accent);stroke-width:6;stroke-linecap:round;stroke-dasharray:440;stroke-dashoffset:440;filter:drop-shadow(0 0 8px rgba(115,207,255,0.5))}
+  .follower-num{position:absolute;font-size:12px;color:var(--text);font-weight:700;text-shadow:0 0 6px rgba(115,207,255,0.25)}
 
-    /* FOLLOWER TARGET */
-    .follower-target {
-      position: absolute;
-      bottom: 180px;
-      left: 50%;
-      transform: translateX(-50%);
-      text-align: center;
-      color: #fff;
-      font-weight: bold;
-    }
-    .progress-circle {
-      width: 140px;
-      height: 140px;
-      margin: auto;
-      position: relative;
-    }
-    .progress-circle svg {
-      transform: rotate(-90deg);
-    }
-    .progress-circle circle {
-      fill: none;
-      stroke-width: 8;
-      stroke-linecap: round;
-    }
-    .progress-bg {
-      stroke: rgba(255,255,255,0.2);
-    }
-    .progress-bar {
-      stroke: url(#grad);
-      stroke-dasharray: 440;
-      stroke-dashoffset: 440;
-      filter: drop-shadow(0 0 10px #73cfff);
-      transition: stroke-dashoffset 0.5s ease;
-    }
-    .progress-text {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 18px;
-      text-shadow: 0 0 8px #73cfff;
-    }
-    .progress-circle::after {
-      content: "";
-      position: absolute;
-      width: 160px;
-      height: 160px;
-      top: -10px; left: -10px;
-      border: 2px dashed #73cfff;
-      border-radius: 50%;
-      animation: spin 10s linear infinite;
-      opacity: 0.5;
-    }
-    @keyframes spin {
-      100% { transform: rotate(360deg); }
-    }
+  /* MUSIC PLAYER (footer) */
+  .music-player{
+    position:absolute;bottom:12px;left:50%;transform:translateX(-50%);width:86%;padding:8px 12px;border-radius:12px;background:linear-gradient(180deg, rgba(0,0,0,0.5), rgba(0,0,10,0.6));
+    border:2px solid rgba(115,207,255,0.12);display:flex;align-items:center;gap:10px;z-index:35;justify-content:space-between;padding-right:16px;
+  }
+  .song-info{display:flex;flex-direction:column;justify-content:center;gap:2px;min-width:0;flex:1}
+  .song-title{color:var(--text);font-weight:700;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .song-artist{color:rgba(227,244,255,0.7);font-size:11px}
+  .equalizer{display:flex;gap:4px;align-items:flex-end;height:28px;width:64px}
+  .bar{width:6px;background:var(--accent);border-radius:2px;animation:bar 800ms linear infinite;opacity:0.95;box-shadow:0 0 6px rgba(115,207,255,0.25)}
+  .bar:nth-child(1){animation-delay:0ms}
+  .bar:nth-child(2){animation-delay:120ms}
+  .bar:nth-child(3){animation-delay:240ms}
+  .bar:nth-child(4){animation-delay:360ms}
+  @keyframes bar{
+    0%{height:4px;transform:translateY(0)}
+    50%{height:20px}
+    100%{height:6px}
+  }
 
-    /* SOCIAL BAR */
-    .social-bar {
-      position: absolute;
-      bottom: 90px;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 10px 16px;
-      border: 2px solid #73cfff;
-      border-radius: 14px;
-      background: rgba(0,0,20,0.6);
-      min-width: 140px;
-      text-align: center;
-    }
-    .social-item {
-      font-size: 14px;
-      color: #73cfff;
-      transition: opacity 0.5s ease;
-      text-shadow: 0 0 6px #73cfff;
-      opacity: 0;
-    }
+  /* snow (light) */
+  .snowflake{position:absolute;top:-20px;color:#fff;opacity:0.95;animation:fall linear forwards;pointer-events:none;font-size:12px}
+  @keyframes fall{0%{transform:translateY(-10px) rotate(0);opacity:1}100%{transform:translateY(660px) rotate(360deg);opacity:0}}
 
-    /* PENGUIN MASKOT */
-    .penguin-maskot {
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 150px;
-      height: auto;
-      animation: breathe 3s ease-in-out infinite;
-      filter: drop-shadow(0 0 15px #73cfff);
-    }
-    @keyframes breathe {
-      0%, 100% { transform: translateX(-50%) scale(1); }
-      50% { transform: translateX(-50%) scale(1.05); }
-    }
-
-    /* SNOWFLAKES */
-    .snowflake {
-      position: absolute;
-      top: -10px;
-      color: #fff;
-      opacity: 0.9;
-      animation: fall linear forwards;
-      pointer-events: none;
-    }
-    @keyframes fall {
-      0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
-      100% { transform: translateY(650px) rotate(360deg); opacity: 0; }
-    }
-  </style>
+  /* subtle scanline overlay for sci-fi */
+  .scanline{position:absolute;inset:0;pointer-events:none;mix-blend-mode:screen;opacity:0.03;background-image:linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px);background-size:100% 4px;z-index:5}
+</style>
 </head>
 <body>
-  <div class="container" id="overlay-container">
-    <!-- Game Screen -->
-    <div class="game-frame"></div>
+  <div class="wrap" id="wrap">
+    <div class="scanline"></div>
 
-    <!-- Map Info (typing effect) -->
-    <div class="map-info"><span class="map-text" id="map-text"></span></div>
+    <!-- TOP SOCIAL ROTATOR -->
+    <div class="topbar">
+      <div id="social-item" class="social-item" aria-hidden="true"></div>
+    </div>
 
-    <!-- Follower Target -->
-    <div class="follower-target">
-      <div class="progress-circle">
-        <svg width="140" height="140">
-          <defs>
-            <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#73cfff"/>
-              <stop offset="100%" stop-color="#b3ecff"/>
-            </linearGradient>
-          </defs>
-          <circle class="progress-bg" cx="70" cy="70" r="70"></circle>
-          <circle class="progress-bar" cx="70" cy="70" r="70"></circle>
-        </svg>
-        <div class="progress-text" id="progress-text">0 / 500</div>
+    <!-- GAME FRAME -->
+    <div class="game-frame" id="game-frame">
+      <div class="game-placeholder">GAME AREA (place capture behind this overlay)</div>
+    </div>
+
+    <!-- MAP INFO (typing) -->
+    <div class="map-panel" id="map-panel">
+      <span class="map-text" id="map-text"></span>
+    </div>
+
+    <!-- SMALL FOLLOWER CIRCLE -->
+    <div class="follower-card" id="follower-card" aria-hidden="true">
+      <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <circle class="progress-bg" cx="60" cy="60" r="50"></circle>
+        <circle class="progress-fg" cx="60" cy="60" r="50"></circle>
+      </svg>
+      <div class="follower-num" id="follower-num">0</div>
+    </div>
+
+    <!-- MUSIC PLAYER -->
+    <div class="music-player" id="music-player">
+      <div class="song-info">
+        <div class="song-title" id="song-title">— not playing —</div>
+        <div class="song-artist" id="song-artist"></div>
+      </div>
+      <div class="equalizer" id="eq">
+        <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
       </div>
     </div>
 
-    <!-- Social Bar -->
-    <div class="social-bar">
-      <div class="social-item" id="social-item"></div>
-    </div>
-
-    <!-- Penguin Maskot -->
-    <img src="penguin.png" alt="Penguin" class="penguin-maskot">
   </div>
 
-  <script>
-    const container = document.getElementById('overlay-container');
+<script>
+/* -----------------------
+   Lightweight snow system
+   - max concurrent limited
+   ----------------------- */
+const wrap = document.getElementById('wrap');
+let snowCount = 0, maxSnow = 12; // light for performance
+function spawnSnow(){
+  if(snowCount >= maxSnow) return;
+  const n = document.createElement('div');
+  n.className='snowflake';
+  n.textContent = Math.random() > 0.6 ? '✦' : '❄';
+  const sz = 8 + Math.random()*10;
+  n.style.fontSize = sz+'px';
+  n.style.left = Math.random()* (wrap.clientWidth - 20) + 'px';
+  const dur = 4 + Math.random()*3;
+  n.style.animationDuration = dur+'s';
+  wrap.appendChild(n);
+  snowCount++;
+  setTimeout(()=>{ n.remove(); snowCount--; }, dur*1000 + 100);
+}
+setInterval(spawnSnow, 500);
 
-    // Snow effect
-    function createSnowflake() {
-      const snowflake = document.createElement('div');
-      snowflake.classList.add('snowflake');
-      snowflake.textContent = Math.random() > 0.5 ? '❄' : '✦';
-      snowflake.style.left = Math.random() * container.offsetWidth + 'px';
-      snowflake.style.fontSize = (8 + Math.random() * 12) + 'px';
-      const duration = 5 + Math.random() * 4;
-      snowflake.style.animationDuration = duration + 's';
-      container.appendChild(snowflake);
-      setTimeout(() => snowflake.remove(), duration * 1000);
+/* -----------------------
+   Social rotator (top)
+   ----------------------- */
+const socialItemEl = document.getElementById('social-item');
+const socials = [
+  {icon:'<i class="fas fa-gamepad"></i>', text:'RobloxUser'},
+  {icon:'<i class="fab fa-tiktok"></i>', text:'@tiktok'},
+  {icon:'<i class="fab fa-youtube"></i>', text:'@youtube'},
+  {icon:'<i class="fab fa-instagram"></i>', text:'@instagram'},
+  {icon:'<i class="fab fa-discord"></i>', text:'@discord'}
+];
+let sIndex=0;
+function showSocial(i){
+  socialItemEl.classList.remove('show');
+  // fade out then change then fade in
+  setTimeout(()=>{
+    socialItemEl.innerHTML = socials[i].icon + ' <span style="opacity:.96;margin-left:6px">'+socials[i].text+'</span>';
+    socialItemEl.classList.add('show');
+  },220);
+}
+showSocial(0);
+setInterval(()=>{
+  sIndex = (sIndex+1)%socials.length;
+  showSocial(sIndex);
+},3000);
+
+/* -----------------------
+   Map typing effect (retype every 15s)
+   ----------------------- */
+const mapTextEl = document.getElementById('map-text');
+const mapList = ["❄ Map: Ice Valley","❄ Map: Frostbite Ridge","❄ Map: Crystal Cavern"]; // you can change or randomize
+let mapIdx = 0;
+let typing = true, charIdx = 0;
+function runTyping(){
+  const txt = mapList[mapIdx];
+  if(typing){
+    if(charIdx < txt.length){
+      mapTextEl.textContent = txt.slice(0, charIdx+1);
+      charIdx++;
+      setTimeout(runTyping, 70 + Math.random()*40);
+    } else {
+      typing = false;
+      // wait 15s before deleting
+      setTimeout(runTyping, 15000);
     }
-    setInterval(createSnowflake, 400);
-
-    // Progress circle
-    const progressBar = document.querySelector('.progress-bar');
-    const progressText = document.getElementById('progress-text');
-    const radius = 70;
-    const circumference = 2 * Math.PI * radius;
-    progressBar.setAttribute('r', radius);
-    progressBar.setAttribute('cx', 70);
-    progressBar.setAttribute('cy', 70);
-    progressBar.style.strokeDasharray = circumference;
-
-    function setProgress(current, target) {
-      const percent = current / target;
-      const offset = circumference - percent * circumference;
-      progressBar.style.strokeDashoffset = offset;
-      progressText.textContent = `${current} / ${target}`;
+  } else {
+    if(charIdx > 0){
+      mapTextEl.textContent = txt.slice(0, charIdx-1);
+      charIdx--;
+      setTimeout(runTyping, 30);
+    } else {
+      // next map
+      typing = true;
+      mapIdx = (mapIdx+1) % mapList.length;
+      setTimeout(runTyping, 400);
     }
+  }
+}
+runTyping();
 
-    let currentFollowers = 0;
-    const targetFollowers = 500;
-    const interval = setInterval(() => {
-      if (currentFollowers < targetFollowers) {
-        currentFollowers += 20;
-        setProgress(currentFollowers, targetFollowers);
-      } else {
-        clearInterval(interval);
-      }
-    }, 800);
+/* -----------------------
+   Follower small progress
+   - small numeric + circular progress
+   ----------------------- */
+const progressCircle = document.querySelector('.progress-fg');
+const followerNumEl = document.getElementById('follower-num');
+const R = 50; // matches r in SVG
+const C = 2*Math.PI*R;
+progressCircle.style.strokeDasharray = C;
+progressCircle.style.strokeDashoffset = C;
 
-    // Social media rotator
-    const socials = [
-      { icon: '<i class="fas fa-gamepad"></i>', text: 'RobloxUser' },
-      { icon: '<i class="fab fa-tiktok"></i>', text: '@tiktok' },
-      { icon: '<i class="fab fa-youtube"></i>', text: '@youtube' },
-      { icon: '<i class="fab fa-instagram"></i>', text: '@instagram' },
-      { icon: '<i class="fab fa-discord"></i>', text: '@discord' }
-    ];
-    const socialItem = document.getElementById('social-item');
-    let index = 0;
-    function showNextSocial() {
-      socialItem.style.opacity = 0;
-      setTimeout(() => {
-        const { icon, text } = socials[index];
-        socialItem.innerHTML = `${icon} ${text}`;
-        socialItem.style.opacity = 1;
-      }, 500);
-      index = (index + 1) % socials.length;
-    }
-    showNextSocial();
-    setInterval(showNextSocial, 3000);
+let current = 75;   // example starting count
+const target = 500; // example target
 
-    // Map info typing + retyping every 15s
-    const mapTextEl = document.getElementById('map-text');
-    const mapName = "❄ Map: Ice Valley ❄";
-    let charIndex = 0;
-    let typing = true;
+function updateFollower(c){
+  const pct = Math.min(1, c/target);
+  const offset = C - (C * pct);
+  progressCircle.style.strokeDashoffset = offset;
+  followerNumEl.textContent = String(c);
+}
+updateFollower(current);
 
-    function typeMap() {
-      if (typing) {
-        if (charIndex < mapName.length) {
-          mapTextEl.textContent = mapName.substring(0, charIndex + 1);
-          charIndex++;
-          setTimeout(typeMap, 100);
-        } else {
-          typing = false;
-          setTimeout(typeMap, 15000); // wait 15s before deleting
-        }
-      } else {
-        if (charIndex > 0) {
-          mapTextEl.textContent = mapName.substring(0, charIndex - 1);
-          charIndex--;
-          setTimeout(typeMap, 50);
-        } else {
-          typing = true;
-          setTimeout(typeMap, 500);
-        }
-      }
-    }
-    typeMap();
-  </script>
+// Example: slowly increment to show animation (remove in production)
+const incInterval = setInterval(()=>{
+  if(current < 320){
+    current += 5;
+    updateFollower(current);
+  } else {
+    clearInterval(incInterval);
+  }
+},900);
+
+/* -----------------------
+   Music player (fake demo)
+   - you can integrate with actual player via websocket / obs / extension
+   ----------------------- */
+const songTitleEl = document.getElementById('song-title');
+const songArtistEl = document.getElementById('song-artist');
+const eq = document.getElementById('eq');
+
+// demo playlist
+const tracks = [
+  {title:'Arctic Drive', artist:'Synthwave Factory'},
+  {title:'Glacial Pulse', artist:'Aurora9'},
+  {title:'Night Ski', artist:'Frostbyte'}
+];
+let tIndex = 0;
+function nextTrack(){
+  const t = tracks[tIndex];
+  songTitleEl.textContent = t.title;
+  songArtistEl.textContent = t.artist;
+  tIndex = (tIndex+1) % tracks.length;
+}
+// cycle demo every 8s
+nextTrack();
+setInterval(nextTrack, 8000);
+
+/* -----------------------
+   Resize handling (keeps overlay elements positioned if container scaled)
+   Useful when used in OBS/TikTok Studio that scales browser source.
+   ----------------------- */
+window.addEventListener('resize', ()=>{/* nothing heavy here; layout is mostly CSS */});
+
+/* --------------- end --------------- */
+</script>
 </body>
 </html>
