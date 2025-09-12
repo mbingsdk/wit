@@ -10,66 +10,69 @@
       --accent: #73cfff;
       --text: #fff;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {margin:0;padding:0;box-sizing:border-box;}
     body {
       background: linear-gradient(to bottom, #0a1a2f, #153a5c);
       font-family: Arial, sans-serif;
       color: var(--text);
-      overflow: hidden;
-      height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
     }
     .overlay {
       display: flex;
       flex-direction: column;
       align-items: center;
-      height: 100%;
+      gap: 12px;
+      width: 360px;
+    }
+    .game-container {
+      position: relative;
       width: 100%;
-      padding: 10px;
-      gap: 10px;
-    }
-    .title-box {
-      padding: 8px 16px;
-      background: var(--bg-panel);
-      border: 2px solid rgba(115,207,255,0.25);
-      border-radius: 10px;
-      text-align: center;
-      font-size: 18px;
-      font-weight: bold;
-      text-shadow: 0 0 8px rgba(115,207,255,0.8);
-    }
-    .game-screen {
-      flex: 0 0 70%;
       aspect-ratio: 9/16;
       background: #000;
-      border: 4px solid rgba(115,207,255,0.35);
       border-radius: 14px;
+      border: 4px solid rgba(115,207,255,0.35);
       box-shadow: 0 0 25px rgba(115,207,255,0.4);
-      position: relative;
       overflow: hidden;
     }
-    .social-box {
-      min-width: 240px;
-      padding: 8px 12px;
+    .title-box {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 4px 12px;
       background: var(--bg-panel);
-      border-radius: 10px;
       border: 2px solid rgba(115,207,255,0.25);
-      font-size: 13px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: bold;
+      text-shadow: 0 0 6px rgba(115,207,255,0.8);
+    }
+    .social-box {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
+      padding: 4px 8px;
+      background: var(--bg-panel);
+      border-radius: 8px;
+      border: 2px solid rgba(115,207,255,0.25);
+      font-size: 11px;
       opacity: 0;
       transition: opacity 0.8s;
     }
     .bottom-row {
       display: flex;
-      justify-content: center;
-      align-items: stretch;
-      width: 90%;
       gap: 12px;
+      width: 100%;
     }
     .panel-box {
       flex: 1;
-      min-height: 110px;
+      min-height: 100px;
       padding: 8px;
       border-radius: 12px;
       background: var(--bg-panel);
@@ -77,10 +80,9 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      box-shadow: 0 0 12px rgba(115,207,255,0.15);
     }
     .panel-header {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: bold;
       color: var(--accent);
       margin-bottom: 6px;
@@ -88,7 +90,7 @@
     }
     .follower-card {
       position: relative;
-      width: 80px; height: 80px;
+      width: 70px; height: 70px;
     }
     .follower-card svg {
       transform: rotate(-90deg);
@@ -97,12 +99,12 @@
     .progress-bg {
       fill: none;
       stroke: rgba(255,255,255,0.1);
-      stroke-width: 10;
+      stroke-width: 8;
     }
     .progress-fg {
       fill: none;
       stroke: var(--accent);
-      stroke-width: 10;
+      stroke-width: 8;
       stroke-linecap: round;
       stroke-dasharray: 314;
       stroke-dashoffset: 157;
@@ -113,11 +115,11 @@
       position: absolute;
       top: 50%; left: 50%;
       transform: translate(-50%,-50%);
-      font-size: 13px;
+      font-size: 11px;
       font-weight: bold;
     }
     .map-text {
-      font-size: 13px;
+      font-size: 12px;
       text-align: center;
       white-space: normal;
       word-break: break-word;
@@ -134,35 +136,32 @@
       51%,100%{opacity:0;}
     }
     .music-box {
-      width: 70%;
-      padding: 8px 12px;
-      background: var(--bg-panel);
-      border-radius: 10px;
-      border: 2px solid rgba(115,207,255,0.25);
-      font-size: 13px;
-      text-align: center;
-      box-shadow: 0 0 12px rgba(115,207,255,0.15);
-    }
-    .note-panel {
-      width: 70%;
-      padding: 8px 12px;
+      width: 100%;
+      padding: 6px 10px;
       background: var(--bg-panel);
       border-radius: 10px;
       border: 2px solid rgba(115,207,255,0.25);
       font-size: 12px;
       text-align: center;
-      box-shadow: 0 0 12px rgba(115,207,255,0.15);
+    }
+    .note-panel {
+      width: 100%;
+      padding: 6px 10px;
+      background: var(--bg-panel);
+      border-radius: 10px;
+      border: 2px solid rgba(115,207,255,0.25);
+      font-size: 12px;
+      text-align: center;
     }
   </style>
 </head>
 <body>
   <div class="overlay">
-    <div class="title-box">PENGUIN ANTARCTICA</div>
-
-    <div class="game-screen" id="game-screen"></div>
-
-    <div class="social-box" id="social-box">
-      <i class="fab fa-roblox"></i><span id="social-text"></span>
+    <div class="game-container">
+      <div class="title-box">PENGUIN ANTARCTICA</div>
+      <div class="social-box" id="social-box">
+        <i class="fab fa-roblox"></i><span id="social-text"></span>
+      </div>
     </div>
 
     <div class="bottom-row">
@@ -183,7 +182,6 @@
     </div>
 
     <div class="music-box">Now Playing: ❄ Winter Lofi ❄</div>
-
     <div class="note-panel">Catatan: Jangan lupa cek Discord untuk update event!</div>
   </div>
 
