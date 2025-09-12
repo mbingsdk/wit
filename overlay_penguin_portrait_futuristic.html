@@ -8,7 +8,6 @@
 <style>
 :root{
   --accent:#73cfff;
-  --accent-2:#b3ecff;
   --bg-panel: rgba(0,0,20,0.55);
   --text:#eaf6ff;
 }
@@ -19,20 +18,29 @@ html,body{
 }
 .wrap{
   width:100%; height:100%;
-  aspect-ratio:9/16;
-  max-width:360px; margin:auto;
-  position:relative;
-  background:transparent;
-  overflow:hidden;
+  aspect-ratio:9/16; max-width:360px;
+  margin:auto; position:relative;
+  background:transparent; overflow:hidden;
   pointer-events:none;
 }
 
-/* Social rotator (top) */
+/* Game frame */
+.game-frame{
+  position:absolute; top:10%; left:50%;
+  transform:translateX(-50%);
+  width:88%; height:50%;
+  border:3px solid rgba(115,207,255,0.3);
+  border-radius:16px;
+  background:rgba(255,255,255,0.02);
+  box-shadow:0 0 20px rgba(115,207,255,0.2);
+}
+
+/* Social rotator (lebar = game) */
 .topbar{
   position:absolute; top:20px; left:50%;
   transform:translateX(-50%);
+  width:88%; max-width:88%;
   padding:6px 12px;
-  min-width:180px; max-width:300px;
   border-radius:10px;
   background:var(--bg-panel);
   border:2px solid rgba(115,207,255,0.15);
@@ -44,44 +52,30 @@ html,body{
 }
 .social-item.show{opacity:1;}
 
-/* Game frame */
-.game-frame{
-  position:absolute;
-  top:10%; left:50%; transform:translateX(-50%);
-  width:88%; height:50%;
-  border:3px solid rgba(115,207,255,0.3);
-  border-radius:16px;
-  background:rgba(255,255,255,0.02);
-  box-shadow:0 0 20px rgba(115,207,255,0.2);
-}
-
 /* Bottom panel (follower + map) */
 .bottom-panel{
-  position:absolute;
-  top:63%; left:50%; transform:translateX(-50%);
-  width:90%; padding:8px 14px;
-  display:flex; justify-content:space-between; align-items:center;
+  position:absolute; top:63%; left:50%;
+  transform:translateX(-50%);
+  width:88%; display:flex;
+  justify-content:space-between; align-items:center;
+  padding:6px 12px;
   border-radius:12px;
   background:var(--bg-panel);
   border:2px solid rgba(115,207,255,0.25);
   box-shadow:0 0 15px rgba(115,207,255,0.15);
 }
-
-/* Follower progress circle */
 .follower-card{
-  position:relative;
-  width:70px; height:70px;
+  position:relative; width:70px; height:70px;
   display:grid; place-items:center;
 }
-.follower-card svg{width:70px; height:70px; transform:rotate(-90deg);}
+.follower-card svg{width:70px;height:70px;transform:rotate(-90deg);}
 .progress-bg{stroke:rgba(255,255,255,0.15);stroke-width:6}
 .progress-fg{stroke:var(--accent);stroke-width:6;stroke-linecap:round;stroke-dasharray:440;stroke-dashoffset:440}
 .follower-num{
-  position:absolute; font-size:11px; font-weight:700;
+  position:absolute; font-size:10px; font-weight:700;
   color:var(--text); text-shadow:0 0 6px var(--accent);
+  text-align:center; line-height:1.2;
 }
-
-/* Map info typing */
 .map-panel{flex:1; text-align:right;}
 .map-text{
   font-size:13px; color:var(--text);
@@ -89,11 +83,11 @@ html,body{
   padding-right:4px;
 }
 
-/* Music player */
+/* Music player (lebar = game) */
 .music-player{
-  position:absolute;
-  bottom:20px; left:50%; transform:translateX(-50%);
-  width:85%; padding:8px 12px;
+  position:absolute; bottom:20px; left:50%;
+  transform:translateX(-50%);
+  width:88%; padding:8px 12px;
   border-radius:12px;
   background:var(--bg-panel);
   border:2px solid rgba(115,207,255,0.2);
@@ -133,7 +127,7 @@ html,body{
         <circle class="progress-bg" cx="60" cy="60" r="50"/>
         <circle class="progress-fg" cx="60" cy="60" r="50"/>
       </svg>
-      <div id="follower-num" class="follower-num">0</div>
+      <div id="follower-num" class="follower-num">320/500</div>
     </div>
     <!-- Map -->
     <div class="map-panel"><span id="map-text" class="map-text"></span></div>
@@ -152,7 +146,7 @@ html,body{
 </div>
 
 <script>
-/* Snow effect */
+/* Snow */
 const wrap=document.getElementById("wrap");
 setInterval(()=>{
   const s=document.createElement("div");
@@ -175,7 +169,7 @@ const socials=[
 let si=0;function showSocial(){socialEl.classList.remove("show");setTimeout(()=>{socialEl.innerHTML=socials[si].icon+" "+socials[si].text;socialEl.classList.add("show");},200);si=(si+1)%socials.length;}
 showSocial();setInterval(showSocial,3000);
 
-/* Map typing effect */
+/* Map typing */
 const mapText=document.getElementById("map-text");
 const maps=["❄ Map: Ice Valley","❄ Map: Frostbite Ridge","❄ Map: Crystal Cavern"];
 let mi=0,ci=0,typing=true;
@@ -188,13 +182,12 @@ function typeMap(){
 }
 typeMap();
 
-/* Follower progress */
+/* Follower progress sample */
 const fg=document.querySelector(".progress-fg");
-const fn=document.getElementById("follower-num");
-const R=50,C=2*Math.PI*R;fg.style.strokeDasharray=C;fg.style.strokeDashoffset=C;
-let cur=0,target=500;
-function setProgress(c){const pct=c/target;fg.style.strokeDashoffset=C-C*pct;fn.textContent=c;}
-let iv=setInterval(()=>{if(cur<target){cur+=20;setProgress(cur);}else clearInterval(iv);},800);
+const R=50,C=2*Math.PI*R;fg.style.strokeDasharray=C;
+let current=320,target=500;
+let pct=current/target;
+fg.style.strokeDashoffset=C-C*pct;
 
 /* Music demo */
 const st=document.getElementById("song-title"),sa=document.getElementById("song-artist");
