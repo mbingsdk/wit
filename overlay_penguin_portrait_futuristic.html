@@ -108,7 +108,6 @@
       font-size: 18px;
       text-shadow: 0 0 8px #73cfff;
     }
-    /* glowing ring orbit */
     .progress-circle::after {
       content: "";
       position: absolute;
@@ -130,35 +129,19 @@
       bottom: 90px;
       left: 50%;
       transform: translateX(-50%);
-      display: flex;
-      gap: 10px;
-      padding: 8px 12px;
+      padding: 10px 16px;
       border: 2px solid #73cfff;
       border-radius: 14px;
       background: rgba(0,0,20,0.6);
-      animation: fadeUp 2s ease;
+      min-width: 140px;
+      text-align: center;
     }
     .social-item {
-      display: flex;
-      align-items: center;
-      gap: 4px;
+      font-size: 14px;
       color: #73cfff;
-      font-size: 12px;
+      transition: opacity 0.5s ease;
+      text-shadow: 0 0 6px #73cfff;
       opacity: 0;
-      transform: translateY(10px);
-      animation: popUp 1s forwards;
-    }
-    .social-item:nth-child(1) { animation-delay: 0.2s; }
-    .social-item:nth-child(2) { animation-delay: 0.4s; }
-    .social-item:nth-child(3) { animation-delay: 0.6s; }
-    .social-item:nth-child(4) { animation-delay: 0.8s; }
-    .social-item:nth-child(5) { animation-delay: 1s; }
-    @keyframes popUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
     }
 
     /* PENGUIN MASKOT */
@@ -219,11 +202,7 @@
 
     <!-- Social Bar -->
     <div class="social-bar">
-      <div class="social-item"><i class="fas fa-gamepad"></i>RobloxUser</div>
-      <div class="social-item"><i class="fab fa-tiktok"></i>@tiktok</div>
-      <div class="social-item"><i class="fab fa-youtube"></i>@youtube</div>
-      <div class="social-item"><i class="fab fa-instagram"></i>@instagram</div>
-      <div class="social-item"><i class="fab fa-discord"></i>@discord</div>
+      <div class="social-item" id="social-item"></div>
     </div>
 
     <!-- Penguin Maskot -->
@@ -264,7 +243,6 @@
       progressText.textContent = `${current} / ${target}`;
     }
 
-    // Dummy follower count
     let currentFollowers = 0;
     const targetFollowers = 500;
     const interval = setInterval(() => {
@@ -275,6 +253,32 @@
         clearInterval(interval);
       }
     }, 800);
+
+    // Social media rotator
+    const socials = [
+      { icon: '<i class="fas fa-gamepad"></i>', text: 'RobloxUser' },
+      { icon: '<i class="fab fa-tiktok"></i>', text: '@tiktok' },
+      { icon: '<i class="fab fa-youtube"></i>', text: '@youtube' },
+      { icon: '<i class="fab fa-instagram"></i>', text: '@instagram' },
+      { icon: '<i class="fab fa-discord"></i>', text: '@discord' }
+    ];
+
+    const socialItem = document.getElementById('social-item');
+    let index = 0;
+
+    function showNextSocial() {
+      socialItem.style.opacity = 0;
+      setTimeout(() => {
+        const { icon, text } = socials[index];
+        socialItem.innerHTML = `${icon} ${text}`;
+        socialItem.style.opacity = 1;
+      }, 500);
+
+      index = (index + 1) % socials.length;
+    }
+
+    showNextSocial();
+    setInterval(showNextSocial, 3000);
   </script>
 </body>
 </html>
