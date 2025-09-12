@@ -22,38 +22,12 @@
       position: relative;
     }
 
-    /* MAP INFO */
-    .map-info {
-      position: absolute;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      padding: 8px 14px;
-      border: 2px solid #73cfff;
-      border-radius: 10px;
-      background: rgba(0,0,20,0.6);
-      color: #fff;
-      font-size: 14px;
-      overflow: hidden;
-    }
-    .map-info::after {
-      content: "";
-      position: absolute;
-      top: 0; left: -100%;
-      width: 100%; height: 100%;
-      background: linear-gradient(120deg, transparent, rgba(115,207,255,0.5), transparent);
-      animation: scan 3s linear infinite;
-    }
-    @keyframes scan {
-      100% { left: 100%; }
-    }
-
     /* GAME FRAME */
     .game-frame {
       width: 90%;
       height: 50%;
       position: absolute;
-      top: 14%;
+      top: 10%;
       left: 50%;
       transform: translateX(-50%);
       border: 4px solid #73cfff;
@@ -64,6 +38,36 @@
     @keyframes neonPulse {
       from { box-shadow: 0 0 10px #73cfff, 0 0 20px #b3ecff; }
       to { box-shadow: 0 0 25px #a3dfff, 0 0 40px #e0f7ff; }
+    }
+
+    /* MAP INFO (typing style) */
+    .map-info {
+      position: absolute;
+      top: 62%;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 6px 12px;
+      border: 2px solid #73cfff;
+      border-radius: 10px;
+      background: rgba(0,0,20,0.6);
+      color: #fff;
+      font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      width: fit-content;
+      max-width: 80%;
+      text-align: center;
+    }
+    .map-text {
+      display: inline-block;
+      border-right: 2px solid #73cfff;
+      white-space: nowrap;
+      overflow: hidden;
+      animation: blinkCursor 0.8s infinite;
+    }
+    @keyframes blinkCursor {
+      0%, 50% { border-color: #73cfff; }
+      51%, 100% { border-color: transparent; }
     }
 
     /* FOLLOWER TARGET */
@@ -177,11 +181,11 @@
 </head>
 <body>
   <div class="container" id="overlay-container">
-    <!-- Map Info -->
-    <div class="map-info">❄ Map: Ice Valley</div>
-
     <!-- Game Screen -->
     <div class="game-frame"></div>
+
+    <!-- Map Info (typing effect) -->
+    <div class="map-info"><span class="map-text" id="map-text"></span></div>
 
     <!-- Follower Target -->
     <div class="follower-target">
@@ -262,10 +266,8 @@
       { icon: '<i class="fab fa-instagram"></i>', text: '@instagram' },
       { icon: '<i class="fab fa-discord"></i>', text: '@discord' }
     ];
-
     const socialItem = document.getElementById('social-item');
     let index = 0;
-
     function showNextSocial() {
       socialItem.style.opacity = 0;
       setTimeout(() => {
@@ -273,12 +275,39 @@
         socialItem.innerHTML = `${icon} ${text}`;
         socialItem.style.opacity = 1;
       }, 500);
-
       index = (index + 1) % socials.length;
     }
-
     showNextSocial();
     setInterval(showNextSocial, 3000);
+
+    // Map info typing + retyping every 15s
+    const mapTextEl = document.getElementById('map-text');
+    const mapName = "❄ Map: Ice Valley ❄";
+    let charIndex = 0;
+    let typing = true;
+
+    function typeMap() {
+      if (typing) {
+        if (charIndex < mapName.length) {
+          mapTextEl.textContent = mapName.substring(0, charIndex + 1);
+          charIndex++;
+          setTimeout(typeMap, 100);
+        } else {
+          typing = false;
+          setTimeout(typeMap, 15000); // wait 15s before deleting
+        }
+      } else {
+        if (charIndex > 0) {
+          mapTextEl.textContent = mapName.substring(0, charIndex - 1);
+          charIndex--;
+          setTimeout(typeMap, 50);
+        } else {
+          typing = true;
+          setTimeout(typeMap, 500);
+        }
+      }
+    }
+    typeMap();
   </script>
 </body>
 </html>
