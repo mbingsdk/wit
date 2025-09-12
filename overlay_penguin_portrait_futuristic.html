@@ -12,7 +12,7 @@
     }
     * {margin:0;padding:0;box-sizing:border-box;}
     body {
-      background: transparent;
+      background: transparent; /* transparan penuh */
       font-family: Arial, sans-serif;
       color: var(--text);
       display: flex;
@@ -24,16 +24,16 @@
       flex-direction: column;
       align-items: center;
       gap: 12px;
-      width: 500px;
+      width: 400px; /* patokan layout */
     }
     .game-container {
       position: relative;
       width: 100%;
-      aspect-ratio: 4/3;
-      background: #000;
+      aspect-ratio: 4/3; /* game 4:3 */
+      background: rgba(0,0,0,0.5);
       border-radius: 14px;
-      border: 3px solid rgba(115,207,255,0.35);
-      box-shadow: 0 0 18px rgba(115,207,255,0.4);
+      border: 3px solid rgba(115,207,255,0.6);
+      box-shadow: 0 0 18px rgba(115,207,255,0.5);
       overflow: hidden;
     }
     .title-box {
@@ -43,8 +43,8 @@
       transform: translateX(-50%);
       padding: 4px 12px;
       background: var(--bg-panel);
-      border: 2px solid rgba(115,207,255,0.25);
-      border-radius: 10px;
+      border: 2px solid rgba(115,207,255,0.35);
+      border-radius: 8px;
       font-size: 13px;
       font-weight: bold;
       text-shadow: 0 0 6px rgba(115,207,255,0.8);
@@ -57,11 +57,11 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      padding: 4px 10px;
+      padding: 4px 8px;
       background: var(--bg-panel);
       border-radius: 8px;
       border: 2px solid rgba(115,207,255,0.25);
-      font-size: 12px;
+      font-size: 11px;
       opacity: 0;
       transition: opacity 0.8s;
     }
@@ -72,7 +72,7 @@
     }
     .panel-box {
       flex: 1;
-      min-height: 110px;
+      min-height: 100px;
       padding: 8px;
       border-radius: 12px;
       background: var(--bg-panel);
@@ -82,7 +82,7 @@
       align-items: center;
     }
     .panel-header {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: bold;
       color: var(--accent);
       margin-bottom: 6px;
@@ -90,7 +90,7 @@
     }
     .follower-card {
       position: relative;
-      width: 80px; height: 80px;
+      width: 70px; height: 70px;
     }
     .follower-card svg {
       transform: rotate(-90deg);
@@ -115,15 +115,15 @@
       position: absolute;
       top: 50%; left: 50%;
       transform: translate(-50%,-50%);
-      font-size: 12px;
+      font-size: 11px;
       font-weight: bold;
     }
     .map-text {
-      font-size: 13px;
+      font-size: 12px;
       text-align: center;
       white-space: normal;
       word-break: break-word;
-      max-height: 42px;
+      max-height: 40px;
       overflow: hidden;
     }
     .map-text::after {
@@ -141,7 +141,7 @@
       background: var(--bg-panel);
       border-radius: 10px;
       border: 2px solid rgba(115,207,255,0.25);
-      font-size: 13px;
+      font-size: 12px;
       text-align: center;
     }
     .note-panel {
@@ -233,11 +233,11 @@
       socialBox.querySelector("i").className="fab "+s.icon;
       socialText.textContent=s.text;
       socialBox.style.opacity=1;
-      setTimeout(()=>{socialBox.style.opacity=0;},4500);
+      setTimeout(()=>{socialBox.style.opacity=0;},5500);
       sidx=(sidx+1)%socials.length;
     }
     cycleSocials();
-    setInterval(cycleSocials,5000);
+    setInterval(cycleSocials,6000);
   </script>
 </body>
 </html>
