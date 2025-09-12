@@ -11,7 +11,6 @@
   --text: #fff;
 }
 
-/* Reset */
 html, body {
   margin: 0;
   height: 100%;
@@ -31,7 +30,7 @@ html, body {
   overflow: hidden;
 }
 
-/* Game Screen */
+/* Game screen */
 .game-screen {
   position: absolute;
   top: 10%;
@@ -43,7 +42,6 @@ html, body {
   border: 2px solid rgba(115,207,255,0.3);
   border-radius: 16px;
   box-shadow: 0 0 18px rgba(115,207,255,0.25);
-  overflow: hidden;
 }
 
 /* Title */
@@ -59,36 +57,29 @@ html, body {
   text-shadow: 0 0 8px rgba(115,207,255,0.9), 0 0 16px rgba(115,207,255,0.6);
 }
 
-/* Social inside game */
+/* Social box */
 .social-box {
   position: absolute;
-  bottom: 6%;
-  left: 6%;
+  top: 64%;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 4px 8px;
+  padding: 6px 10px;
   background: var(--bg-panel);
   border-radius: 8px;
   border: 1px solid rgba(115,207,255,0.25);
   font-size: 11px;
   opacity: 0;
-  animation: fadeIn 1s forwards;
+  transition: opacity .6s;
 }
+.social-icon { font-size: 14px; }
 
-.social-icon {
-  font-size: 14px;
-}
-
-@keyframes fadeIn {
-  from {opacity: 0;}
-  to {opacity: 1;}
-}
-
-/* Bottom row for follower + map */
+/* Bottom row */
 .bottom-row {
   position: absolute;
-  top: 65%;
+  top: 70%;
   left: 50%;
   transform: translateX(-50%);
   width: 86%;
@@ -96,7 +87,6 @@ html, body {
   justify-content: space-between;
   gap: 10px;
 }
-
 .panel-box {
   flex: 1;
   min-height: 100px;
@@ -109,7 +99,6 @@ html, body {
   align-items: flex-start;
   box-shadow: 0 0 12px rgba(115,207,255,0.15);
 }
-
 .panel-content {
   display: flex;
   flex-direction: column;
@@ -118,46 +107,39 @@ html, body {
   width: 100%;
   height: 100%;
 }
-
 .panel-header {
   font-size: 10px;
   font-weight: 700;
   color: var(--accent);
   letter-spacing: 1px;
   text-shadow: 0 0 6px rgba(115,207,255,0.8);
-  margin-bottom: 4px;
 }
 
-/* Follower Progress */
+/* Follower circle */
 .follower-card {
   position: relative;
   width: 90px;
   height: 90px;
 }
-
 .follower-card svg {
   width: 100%;
   height: 100%;
   transform: rotate(-90deg);
 }
-
 .progress-bg {
   fill: none;
   stroke: rgba(255,255,255,0.15);
   stroke-width: 10;
 }
-
 .progress-fg {
   fill: none;
   stroke: var(--accent);
   stroke-width: 10;
   stroke-linecap: round;
-  stroke-dasharray: 314; /* 2πr, r=50 */
-  stroke-dashoffset: 80; /* sample */
-  transition: stroke-dashoffset 1s;
+  stroke-dasharray: 314;
+  stroke-dashoffset: 80;
   filter: drop-shadow(0 0 6px var(--accent));
 }
-
 .follower-num {
   position: absolute;
   top: 50%;
@@ -168,7 +150,7 @@ html, body {
   text-align: center;
 }
 
-/* Map typing text */
+/* Map */
 .map-text {
   font-size: 12px;
   color: var(--text);
@@ -178,20 +160,14 @@ html, body {
   overflow: hidden;
   max-height: 40px;
 }
-
-/* Cursor blink for map */
 .map-text::after {
   content: "|";
   margin-left: 2px;
   animation: blink 1s infinite;
 }
+@keyframes blink { 0%,50%{opacity:1;} 51%,100%{opacity:0;} }
 
-@keyframes blink {
-  0%,50% { opacity: 1; }
-  51%,100% { opacity: 0; }
-}
-
-/* Music Player */
+/* Music player */
 .music-player {
   position: absolute;
   bottom: 8%;
@@ -206,15 +182,9 @@ html, body {
   align-items: center;
   gap: 8px;
   font-size: 11px;
-  color: var(--text);
   box-shadow: 0 0 12px rgba(115,207,255,0.15);
 }
-
-.music-icon {
-  font-size: 14px;
-  color: var(--accent);
-}
-
+.music-icon { font-size: 14px; color: var(--accent); }
 .progress-bar {
   flex: 1;
   height: 4px;
@@ -223,7 +193,6 @@ html, body {
   overflow: hidden;
   position: relative;
 }
-
 .progress-bar::after {
   content: "";
   position: absolute;
@@ -233,13 +202,9 @@ html, body {
   background: var(--accent);
   animation: progressMove 6s linear infinite;
 }
+@keyframes progressMove { 0%{width:0%;} 100%{width:100%;} }
 
-@keyframes progressMove {
-  0% {width: 0%;}
-  100% {width: 100%;}
-}
-
-/* Note Panel */
+/* Note */
 .note-panel {
   position: absolute;
   bottom: 2%;
@@ -253,27 +218,23 @@ html, body {
   font-size: 11px;
   text-align: center;
   box-shadow: 0 0 12px rgba(115,207,255,0.15);
-  color: var(--text);
 }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <!-- Title -->
   <div class="title">PENGUIN ANTARCTICA</div>
 
-  <!-- Game Screen -->
-  <div class="game-screen">
-    <!-- Social inside -->
-    <div class="social-box" id="social-box">
-      <span class="social-icon" id="social-icon">🎮</span>
-      <span id="social-text"></span>
-    </div>
+  <div class="game-screen"></div>
+
+  <!-- Social above bottom row -->
+  <div class="social-box" id="social-box">
+    <span class="social-icon" id="social-icon">🎮</span>
+    <span id="social-text"></span>
   </div>
 
   <!-- Bottom Row -->
   <div class="bottom-row">
-    <!-- Follower Panel -->
     <div class="panel-box">
       <div class="panel-content">
         <div class="panel-header">TARGET FOLLOWER</div>
@@ -286,8 +247,6 @@ html, body {
         </div>
       </div>
     </div>
-
-    <!-- Map Panel -->
     <div class="panel-box">
       <div class="panel-content">
         <div class="panel-header">MAP</div>
@@ -296,23 +255,22 @@ html, body {
     </div>
   </div>
 
-  <!-- Music Player -->
+  <!-- Music -->
   <div class="music-player">
     <span class="music-icon">🎵</span>
     <div>Music Title - Artist</div>
     <div class="progress-bar"></div>
   </div>
 
-  <!-- Note Panel -->
+  <!-- Note -->
   <div class="note-panel">Catatan penting ditaruh di sini...</div>
 </div>
 
 <script>
-// Typing animation for map name
+// Map typing
 const mapText = document.getElementById("map-text");
 const maps = ["Snow Valley Expedition", "Crystal Ice Cavern", "Frozen Tundra Base"];
 let idx = 0;
-
 function typeMap(text) {
   mapText.textContent = "";
   let i = 0;
@@ -320,12 +278,9 @@ function typeMap(text) {
     if (i < text.length) {
       mapText.textContent += text[i];
       i++;
-    } else {
-      clearInterval(interval);
-    }
+    } else clearInterval(interval);
   }, 100);
 }
-
 function cycleMaps() {
   typeMap(maps[idx]);
   idx = (idx + 1) % maps.length;
@@ -333,11 +288,10 @@ function cycleMaps() {
 cycleMaps();
 setInterval(cycleMaps, 15000);
 
-// Social rotator with icons + fade
+// Social rotator
 const socialBox = document.getElementById("social-box");
 const socialIcon = document.getElementById("social-icon");
 const socialText = document.getElementById("social-text");
-
 const socials = [
   {icon:"🎮", text:"Roblox: @user123"},
   {icon:"🎵", text:"TikTok: @streamer"},
@@ -346,7 +300,6 @@ const socials = [
   {icon:"💬", text:"Discord: myserver"}
 ];
 let sidx = 0;
-
 function cycleSocials() {
   socialBox.style.opacity = 0;
   setTimeout(() => {
@@ -354,7 +307,7 @@ function cycleSocials() {
     socialText.textContent = socials[sidx].text;
     socialBox.style.opacity = 1;
     sidx = (sidx + 1) % socials.length;
-  }, 500);
+  }, 600);
 }
 cycleSocials();
 setInterval(cycleSocials, 7000);
